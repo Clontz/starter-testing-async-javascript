@@ -29,12 +29,27 @@ describe("requests.js", () => {
     ];
 
     it("should make a GET request to the appropriate URL", async () => {
-      // Write code here
+        jest.spyOn(axios, "get");
+      
+        await index();
+        
+        const expectedURL = `${BASE_URL}/constellations`;
+        expect(axios.get).toHaveBeenCalledWith(expectedURL);
+      
+        jest.clearAllMocks();
       expect(1).toBe(2);
     });
 
     it("should return a list of constellations with fewer than 10 stars with planets", async () => {
-      // Write code here
+      jest.spyOn(axios, "get");
+  axios.get.mockImplementation(() => Promise.resolve({ data }));
+
+  const response = await index();
+
+  const expected = data.slice(0, 2);
+  expect(response).toEqual(expected);
+
+  jest.clearAllMocks();
       expect(1).toBe(2);
     });
 
